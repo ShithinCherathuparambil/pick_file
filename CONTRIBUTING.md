@@ -28,3 +28,4 @@ Thank you for your interest in contributing to `pick_file`!
 - Format all Dart code with `dart format .`.
 - Avoid adding third-party picker or storage dependencies.
 - Update documentation and examples when adding new features or modifying behavior.
+

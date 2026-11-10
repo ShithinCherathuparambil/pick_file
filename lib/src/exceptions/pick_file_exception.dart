@@ -171,3 +171,4 @@ class NativePickerFailedException extends PickFileException {
     super.details,
   });
 }
+
