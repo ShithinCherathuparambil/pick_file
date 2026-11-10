@@ -15,14 +15,14 @@ class PickedFileResult {
   PickedFileResult({
     required this.path,
     required this.name,
-    required this.extension,
+    required this.fileExtension,
     required this.mimeType,
     required this.sizeBytes,
   });
 
   final String path;
   final String name;
-  final String extension;
+  final String fileExtension;
   final String mimeType;
   final int sizeBytes;
 }

@@ -439,7 +439,7 @@ class PickFilePlugin :
         return PickedFileResult(
             path = targetFile.absolutePath,
             name = displayName,
-            extension = extension,
+            fileExtension = extension,
             mimeType = detectedMime,
             sizeBytes = finalLength
         )

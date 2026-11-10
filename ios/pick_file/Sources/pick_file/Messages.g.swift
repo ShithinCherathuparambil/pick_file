@@ -190,7 +190,7 @@ private func nilOrValue<T>(_ value: Any?) -> T? {
 struct PickedFileResult: Hashable, CustomStringConvertible {
   var path: String
   var name: String
-  var extension: String
+  var fileExtension: String
   var mimeType: String
   var sizeBytes: Int64
 
@@ -199,14 +199,14 @@ struct PickedFileResult: Hashable, CustomStringConvertible {
   static func fromList(_ pigeonVar_list: [Any?]) -> PickedFileResult? {
     let path = pigeonVar_list[0] as! String
     let name = pigeonVar_list[1] as! String
-    let extension = pigeonVar_list[2] as! String
+    let fileExtension = pigeonVar_list[2] as! String
     let mimeType = pigeonVar_list[3] as! String
     let sizeBytes = pigeonVar_list[4] as! Int64
 
     return PickedFileResult(
       path: path,
       name: name,
-      extension: extension,
+      fileExtension: fileExtension,
       mimeType: mimeType,
       sizeBytes: sizeBytes
     )
@@ -215,7 +215,7 @@ struct PickedFileResult: Hashable, CustomStringConvertible {
     return [
       path,
       name,
-      extension,
+      fileExtension,
       mimeType,
       sizeBytes,
     ]
@@ -224,20 +224,20 @@ struct PickedFileResult: Hashable, CustomStringConvertible {
     if Swift.type(of: lhs) != Swift.type(of: rhs) {
       return false
     }
-    return MessagesPigeonInternal.deepEquals(lhs.path, rhs.path) && MessagesPigeonInternal.deepEquals(lhs.name, rhs.name) && MessagesPigeonInternal.deepEquals(lhs.extension, rhs.extension) && MessagesPigeonInternal.deepEquals(lhs.mimeType, rhs.mimeType) && MessagesPigeonInternal.deepEquals(lhs.sizeBytes, rhs.sizeBytes)
+    return MessagesPigeonInternal.deepEquals(lhs.path, rhs.path) && MessagesPigeonInternal.deepEquals(lhs.name, rhs.name) && MessagesPigeonInternal.deepEquals(lhs.fileExtension, rhs.fileExtension) && MessagesPigeonInternal.deepEquals(lhs.mimeType, rhs.mimeType) && MessagesPigeonInternal.deepEquals(lhs.sizeBytes, rhs.sizeBytes)
   }
 
   func hash(into hasher: inout Hasher) {
     hasher.combine("PickedFileResult")
     MessagesPigeonInternal.deepHash(value: path, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: name, hasher: &hasher)
-    MessagesPigeonInternal.deepHash(value: extension, hasher: &hasher)
+    MessagesPigeonInternal.deepHash(value: fileExtension, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: mimeType, hasher: &hasher)
     MessagesPigeonInternal.deepHash(value: sizeBytes, hasher: &hasher)
   }
 
   public var description: String {
-    return "PickedFileResult(path: \(String(describing: path)), name: \(String(describing: name)), extension: \(String(describing: extension)), mimeType: \(String(describing: mimeType)), sizeBytes: \(String(describing: sizeBytes)))"
+    return "PickedFileResult(path: \(String(describing: path)), name: \(String(describing: name)), fileExtension: \(String(describing: fileExtension)), mimeType: \(String(describing: mimeType)), sizeBytes: \(String(describing: sizeBytes)))"
   }
 }
 

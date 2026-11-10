@@ -1,27 +1,33 @@
 package com.example.pick_file
 
-import io.flutter.plugin.common.MethodCall
-import io.flutter.plugin.common.MethodChannel
-import org.mockito.Mockito
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
-
-/*
- * This demonstrates a simple unit test of the Kotlin portion of this plugin's implementation.
- *
- * Once you have built the plugin's example app, you can run these tests from the command
- * line by running `./gradlew testDebugUnitTest` in the `example/android/` directory, or
- * you can run them directly from IDEs that support JUnit such as Android Studio.
- */
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 internal class PickFilePluginTest {
+
     @Test
-    fun onMethodCall_getPlatformVersion_returnsExpectedValue() {
+    fun pluginInstantiation_succeeds() {
         val plugin = PickFilePlugin()
+        assertNotNull(plugin)
+    }
 
-        val call = MethodCall("getPlatformVersion", null)
-        val mockResult: MethodChannel.Result = Mockito.mock(MethodChannel.Result::class.java)
-        plugin.onMethodCall(call, mockResult)
+    @Test
+    fun pickFiles_whenActivityNull_throwsPlatformUnavailable() {
+        val plugin = PickFilePlugin()
+        val options = FilePickOptionsDto(
+            allowMultiple = false,
+            filterType = "any"
+        )
 
-        Mockito.verify(mockResult).success("Android " + android.os.Build.VERSION.RELEASE)
+        val exception = assertThrows<FlutterError> {
+            runBlocking {
+                plugin.pickFiles(options)
+            }
+        }
+
+        assertEquals("platform_unavailable", exception.code)
     }
 }

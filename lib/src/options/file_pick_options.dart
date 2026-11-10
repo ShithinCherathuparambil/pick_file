@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+
 import '../exceptions/pick_file_exception.dart';
 
 /// Predefined file category filters for [FilePickOptions].
@@ -77,7 +78,8 @@ class FilePickOptions {
 
     if (!allowMultiple && maxFiles != null && maxFiles! > 1) {
       throw const InvalidOptionsException(
-        message: 'maxFiles cannot be greater than 1 when allowMultiple is false.',
+        message:
+            'maxFiles cannot be greater than 1 when allowMultiple is false.',
       );
     }
 
@@ -92,8 +94,7 @@ class FilePickOptions {
       final hasMimeTypes = mimeTypes != null && mimeTypes!.isNotEmpty;
       if (!hasExtensions && !hasMimeTypes) {
         throw const InvalidFilterException(
-          message:
-              'FileTypeFilter.custom requires at least one extension or MIME type.',
+          message: 'FileTypeFilter.custom requires at least one extension or MIME type.',
         );
       }
     }

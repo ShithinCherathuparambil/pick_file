@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:meta/meta.dart';
+
 import '../exceptions/pick_file_exception.dart';
 
 /// Represents a file picked by the user and made accessible locally in the application cache.
@@ -83,9 +85,7 @@ class PickedFile {
     try {
       final source = file;
       if (!await source.exists()) {
-        throw FileNotFoundException(
-          message: 'Cannot save missing file: $path',
-        );
+        throw FileNotFoundException(message: 'Cannot save missing file: $path');
       }
 
       final destination = File(destinationPath);

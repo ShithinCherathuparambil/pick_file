@@ -204,7 +204,7 @@ class FlutterError (
 data class PickedFileResult (
   val path: String,
   val name: String,
-  val extension: String,
+  val fileExtension: String,
   val mimeType: String,
   val sizeBytes: Long
 )
@@ -213,17 +213,17 @@ data class PickedFileResult (
     fun fromList(pigeonVar_list: List<Any?>): PickedFileResult {
       val path = pigeonVar_list[0] as String
       val name = pigeonVar_list[1] as String
-      val extension = pigeonVar_list[2] as String
+      val fileExtension = pigeonVar_list[2] as String
       val mimeType = pigeonVar_list[3] as String
       val sizeBytes = pigeonVar_list[4] as Long
-      return PickedFileResult(path, name, extension, mimeType, sizeBytes)
+      return PickedFileResult(path, name, fileExtension, mimeType, sizeBytes)
     }
   }
   fun toList(): List<Any?> {
     return listOf(
       path,
       name,
-      extension,
+      fileExtension,
       mimeType,
       sizeBytes,
     )
@@ -236,20 +236,20 @@ data class PickedFileResult (
       return true
     }
     val other = other as PickedFileResult
-    return MessagesPigeonUtils.deepEquals(this.path, other.path) && MessagesPigeonUtils.deepEquals(this.name, other.name) && MessagesPigeonUtils.deepEquals(this.extension, other.extension) && MessagesPigeonUtils.deepEquals(this.mimeType, other.mimeType) && MessagesPigeonUtils.deepEquals(this.sizeBytes, other.sizeBytes)
+    return MessagesPigeonUtils.deepEquals(this.path, other.path) && MessagesPigeonUtils.deepEquals(this.name, other.name) && MessagesPigeonUtils.deepEquals(this.fileExtension, other.fileExtension) && MessagesPigeonUtils.deepEquals(this.mimeType, other.mimeType) && MessagesPigeonUtils.deepEquals(this.sizeBytes, other.sizeBytes)
   }
 
   override fun hashCode(): Int {
     var result = javaClass.hashCode()
     result = 31 * result + MessagesPigeonUtils.deepHash(this.path)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.name)
-    result = 31 * result + MessagesPigeonUtils.deepHash(this.extension)
+    result = 31 * result + MessagesPigeonUtils.deepHash(this.fileExtension)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.mimeType)
     result = 31 * result + MessagesPigeonUtils.deepHash(this.sizeBytes)
     return result
   }
   override fun toString(): String {
-    return "PickedFileResult(path=$path, name=$name, extension=$extension, mimeType=$mimeType, sizeBytes=$sizeBytes)"
+    return "PickedFileResult(path=$path, name=$name, fileExtension=$fileExtension, mimeType=$mimeType, sizeBytes=$sizeBytes)"
   }
 }
 

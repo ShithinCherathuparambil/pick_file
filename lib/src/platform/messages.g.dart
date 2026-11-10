@@ -12,9 +12,9 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart' show immutable, protected, visibleForTesting;
 
 Object? _extractReplyValueOrThrow(
-    List<Object?>? replyList,
-    String channelName, {
-    required bool isNullValid,
+  List<Object?>? replyList,
+  String channelName, {
+  required bool isNullValid,
 }) {
   if (replyList == null) {
     throw PlatformException(
@@ -48,8 +48,9 @@ bool _deepEquals(Object? a, Object? b) {
   }
   if (a is List && b is List) {
     return a.length == b.length &&
-        a.indexed
-            .every(((int, dynamic) item) => _deepEquals(item.$2, b[item.$1]));
+        a.indexed.every(
+          ((int, dynamic) item) => _deepEquals(item.$2, b[item.$1]),
+        );
   }
   if (a is Map && b is Map) {
     if (a.length != b.length) {
@@ -98,12 +99,11 @@ int _deepHash(Object? value) {
   return value.hashCode;
 }
 
-
 class PickedFileResult {
   PickedFileResult({
     required this.path,
     required this.name,
-    required this.extension,
+    required this.fileExtension,
     required this.mimeType,
     required this.sizeBytes,
   });
@@ -112,31 +112,26 @@ class PickedFileResult {
 
   String name;
 
-  String extension;
+  String fileExtension;
 
   String mimeType;
 
   int sizeBytes;
 
   List<Object?> _toList() {
-    return <Object?>[
-      path,
-      name,
-      extension,
-      mimeType,
-      sizeBytes,
-    ];
+    return <Object?>[path, name, fileExtension, mimeType, sizeBytes];
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static PickedFileResult decode(Object result) {
     result as List<Object?>;
     return PickedFileResult(
       path: result[0]! as String,
       name: result[1]! as String,
-      extension: result[2]! as String,
+      fileExtension: result[2]! as String,
       mimeType: result[3]! as String,
       sizeBytes: result[4]! as int,
     );
@@ -151,7 +146,11 @@ class PickedFileResult {
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(path, other.path) && _deepEquals(name, other.name) && _deepEquals(extension, other.extension) && _deepEquals(mimeType, other.mimeType) && _deepEquals(sizeBytes, other.sizeBytes);
+    return _deepEquals(path, other.path) &&
+        _deepEquals(name, other.name) &&
+        _deepEquals(fileExtension, other.fileExtension) &&
+        _deepEquals(mimeType, other.mimeType) &&
+        _deepEquals(sizeBytes, other.sizeBytes);
   }
 
   @override
@@ -160,7 +159,7 @@ class PickedFileResult {
 
   @override
   String toString() {
-    return 'PickedFileResult(path: $path, name: $name, extension: $extension, mimeType: $mimeType, sizeBytes: $sizeBytes)';
+    return 'PickedFileResult(path: $path, name: $name, fileExtension: $fileExtension, mimeType: $mimeType, sizeBytes: $sizeBytes)';
   }
 }
 
@@ -198,7 +197,8 @@ class FilePickOptionsDto {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FilePickOptionsDto decode(Object result) {
     result as List<Object?>;
@@ -221,7 +221,12 @@ class FilePickOptionsDto {
     if (identical(this, other)) {
       return true;
     }
-    return _deepEquals(allowMultiple, other.allowMultiple) && _deepEquals(maxFiles, other.maxFiles) && _deepEquals(maxSizeBytes, other.maxSizeBytes) && _deepEquals(allowedExtensions, other.allowedExtensions) && _deepEquals(allowedMimeTypes, other.allowedMimeTypes) && _deepEquals(filterType, other.filterType);
+    return _deepEquals(allowMultiple, other.allowMultiple) &&
+        _deepEquals(maxFiles, other.maxFiles) &&
+        _deepEquals(maxSizeBytes, other.maxSizeBytes) &&
+        _deepEquals(allowedExtensions, other.allowedExtensions) &&
+        _deepEquals(allowedMimeTypes, other.allowedMimeTypes) &&
+        _deepEquals(filterType, other.filterType);
   }
 
   @override
@@ -234,7 +239,6 @@ class FilePickOptionsDto {
   }
 }
 
-
 class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
   @override
@@ -242,10 +246,10 @@ class _PigeonCodec extends StandardMessageCodec {
     if (value is int) {
       buffer.putUint8(4);
       buffer.putInt64(value);
-    }    else if (value is PickedFileResult) {
+    } else if (value is PickedFileResult) {
       buffer.putUint8(129);
       writeValue(buffer, value.encode());
-    }    else if (value is FilePickOptionsDto) {
+    } else if (value is FilePickOptionsDto) {
       buffer.putUint8(130);
       writeValue(buffer, value.encode());
     } else {
@@ -271,38 +275,41 @@ class PickFileHostApi {
   /// available for dependency injection. If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
   PickFileHostApi({
-      BinaryMessenger? binaryMessenger, 
-      String messageChannelSuffix = '', 
-      })
-      : pigeonVar_binaryMessenger = binaryMessenger,
-        pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+    BinaryMessenger? binaryMessenger,
+    String messageChannelSuffix = '',
+  }) : pigeonVar_binaryMessenger = binaryMessenger,
+       pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty
+           ? '.$messageChannelSuffix'
+           : '';
 
   final BinaryMessenger? pigeonVar_binaryMessenger;
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
 
   final String pigeonVar_messageChannelSuffix;
 
-
   Future<List<PickedFileResult>> pickFiles(FilePickOptionsDto options) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.pick_file.PickFileHostApi.pickFiles$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.pick_file.PickFileHostApi.pickFiles$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[options]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(
+      <Object?>[options],
+    );
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     final Object? pigeonVar_replyValue = _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: false,
-    )
-    ;
+      pigeonVar_replyList,
+      pigeonVar_channelName,
+      isNullValid: false,
+    );
     return (pigeonVar_replyValue! as List<Object?>).cast<PickedFileResult>();
   }
 
   Future<void> clearCache() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.pick_file.PickFileHostApi.clearCache$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.pick_file.PickFileHostApi.clearCache$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
@@ -311,10 +318,9 @@ class PickFileHostApi {
     final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(null);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     _extractReplyValueOrThrow(
-        pigeonVar_replyList,
-        pigeonVar_channelName,
-        isNullValid: true,
-    )
-    ;
+      pigeonVar_replyList,
+      pigeonVar_channelName,
+      isNullValid: true,
+    );
   }
 }

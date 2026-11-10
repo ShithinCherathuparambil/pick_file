@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+
 import '../exceptions/pick_file_exception.dart';
 import '../models/picked_file.dart';
 import '../options/file_pick_options.dart';
@@ -265,7 +266,7 @@ class PickFile {
       }
 
       if (allowedExts != null && allowedExts.isNotEmpty) {
-        final cleanExt = item.extension.trim().toLowerCase();
+        final cleanExt = item.fileExtension.trim().toLowerCase();
         if (!allowedExts.contains(cleanExt)) {
           throw UnsupportedFileTypeException(
             message:
@@ -278,7 +279,7 @@ class PickFile {
         PickedFile(
           name: item.name,
           path: item.path,
-          extension: item.extension.toLowerCase(),
+          extension: item.fileExtension.toLowerCase(),
           mimeType: item.mimeType,
           sizeBytes: item.sizeBytes,
         ),

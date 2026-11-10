@@ -23,7 +23,7 @@ public class PickFilePlugin: NSObject, FlutterPlugin, PickFileHostApi, UIDocumen
 
     // MARK: - PickFileHostApi Implementation
 
-    public func pickFiles(options: FilePickOptionsDto) async throws -> [PickedFileResult] {
+    func pickFiles(options: FilePickOptionsDto) async throws -> [PickedFileResult] {
         try acquireLock()
         currentOptions = options
 
@@ -62,7 +62,7 @@ public class PickFilePlugin: NSObject, FlutterPlugin, PickFileHostApi, UIDocumen
         }
     }
 
-    public func clearCache() async throws {
+    func clearCache() async throws {
         let cacheDir = getCacheDirectory()
         guard let fileUrls = try? FileManager.default.contentsOfDirectory(
             at: cacheDir,
@@ -242,7 +242,7 @@ public class PickFilePlugin: NSObject, FlutterPlugin, PickFileHostApi, UIDocumen
                 processedResult = PickedFileResult(
                     path: targetUrl.path,
                     name: displayName,
-                    extension: fileExtension,
+                    fileExtension: fileExtension,
                     mimeType: mimeType,
                     sizeBytes: totalWritten
                 )
