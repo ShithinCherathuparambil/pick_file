@@ -1,0 +1,36 @@
+name: pick_file
+description: "A production-ready Flutter file picker plugin supporting native SAF on Android, UIDocumentPicker on iOS, streaming, and filtering."
+version: 0.0.1
+homepage: https://github.com/ShithinCherathuparambil/pick_file
+repository: https://github.com/ShithinCherathuparambil/pick_file
+issue_tracker: https://github.com/ShithinCherathuparambil/pick_file/issues
+topics:
+  - file-picker
+  - document-picker
+  - storage-access-framework
+  - document-provider
+  - files
+
+environment:
+  sdk: ^3.13.7
+  flutter: '>=3.3.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  meta: ^1.10.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  pigeon: ^29.2.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.example.pick_file
+        pluginClass: PickFilePlugin
+      ios:
+        pluginClass: PickFilePlugin
